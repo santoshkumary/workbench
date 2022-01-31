@@ -1,8 +1,9 @@
 package org.workbench.application
 package pipeline
 
+import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
-import scala.util.matching.Regex
+//import scala.util.matching.Regex
 import java.text.SimpleDateFormat
 
 object datefunction extends idate {
@@ -11,9 +12,11 @@ object datefunction extends idate {
 
 
     val dt = new SimpleDateFormat("dd-mm-yyyy")
-    return new java.sql.Date(dt.parse(dt_String).getTime())
+     new java.sql.Date(dt.parse(dt_String).getTime)
 
   }
-  val dcnv=udf(dtcnv(_))
+  val dcnv: UserDefinedFunction = {
+    udf(dtcnv(_))
+  }
 
 }
