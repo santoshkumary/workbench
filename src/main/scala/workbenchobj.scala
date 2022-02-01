@@ -23,8 +23,9 @@ object workbenchobj  {
 df.show()
 
 
-    df.select(col("Product"),D.dcnv(col("date"))).show()
-
+   val df_t= df.select(col("Product"),D.dcnv(col("date")).alias("dateconversion"))
+   df_t.show()
+   df_t.printSchema()
 
     //df.select(col("Product"), dccnv(col("date"))).show()
 
