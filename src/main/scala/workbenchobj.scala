@@ -3,20 +3,17 @@ package org.workbench.application
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{col, udf}
 import pipeline.{datefunction=>D}
+import org.workbench.application.{SessionHandler=>S}
+import org.workbench.application.Reader.Readinput
 
 
 object workbenchobj  {
 
   def main(args: Array[String]): Unit = {
 
-    val spark =  SparkSession.builder
-      .config("spark.master", "local")
-      .appName("Wrkbench")
-      .config("spark.sql.warehouse.dir", "hdfs://127.0.0.1:9000/user/hive/warehouse")
-      .enableHiveSupport()
-      .getOrCreate()
+     val sprk=S.spark
 
-    val df=spark.read.format("csv").option("header","true")
+    val df=sprk.read.format("csv").option("header","true")
       .load("hdfs://127.0.0.1:9000//user/prod.csv")
 
 
@@ -28,6 +25,13 @@ df.show()
    df_t.printSchema()
 
     //df.select(col("Product"), dccnv(col("date"))).show()
+   // Reading source
+    val src_Df=new Readinput().src("Dev")
+
+
+    // Writing to hive
+    //val wrMap=Map("Hive"->src_Df)
+    src_Df.show()
 
 
 
