@@ -20,6 +20,13 @@ class Readinput {
 
        df
       }
+      case "DEVFILE"=> {
+        val df=sprk.read.format("csv").option("inferSchema","true").option("header","true")
+          .load("file:///home/hduser/workarea/Empdata.csv")
+
+        df
+      }
+
     }
     readdf
 
